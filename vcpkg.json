@@ -1,0 +1,9 @@
+{
+	"name": "qmp",
+	"version-string": "0.1.0",
+	"dependencies": [
+		"qtbase",
+		"qtmultimedia"
+	],
+	"builtin-baseline": "4b6c50d962cc20aaa3ef457f8ba683b586263cfb"
+}

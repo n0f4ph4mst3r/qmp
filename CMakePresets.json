@@ -1,0 +1,128 @@
+{
+    "version": 8,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 31,
+        "patch": 2
+    },
+    "configurePresets": [
+        {
+            "name": "default",
+            "displayName": "Default Config",
+            "description": "Default build using Ninja generator and with vcpkg toolchain",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "msbuild-default",
+            "inherits": "default",
+            "displayName": "MSBuild Configure Settings",
+            "description": "Configure with VS generators",
+            "generator": "Visual Studio 17 2022",
+            "architecture": {
+                "strategy": "set",
+                "value": "x64"
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                "hostOS": [ "Windows" ]
+                }
+            }
+        },
+        {
+            "name": "msbuild-clang",
+            "inherits": "msbuild-default",
+            "displayName": "MSBuild Configure Settings (ClangCl)",
+            "description": "Configure with VS generators and ClangCl compiler",
+            "toolset": "ClangCL",
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                "hostOS": [ "Windows" ]
+                }
+            }
+        },
+        {
+            "name": "ninja-gcc",
+            "inherits": "default",
+            "displayName": "Ninja Configure Settings (GCC)",
+            "description": "Configure with Ninja generator and GCC compiler",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++"
+            }
+        },
+        {
+            "name": "ninja-clang",
+            "inherits": "default",
+            "displayName": "Ninja Configure Settings (Clang)",
+            "description": "Configure with Ninja generator and Clang compiler",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "msvc-dbg",
+            "configurePreset": "msbuild-default",
+            "displayName": "Debug",
+            "configuration": "Debug",
+            "description": "Disable optimizations - include debug information"
+        },
+        {
+            "name": "msvc",
+            "configurePreset": "msbuild-default",
+            "displayName": "Release",
+            "configuration": "Release",
+            "description": "Optimize for speed - exclude debug information"
+        },
+        {
+            "name": "clang-cl-dbg",
+            "configurePreset": "msbuild-clang",
+            "displayName": "Debug",
+            "configuration": "Debug",
+            "description": "Disable optimizations - include debug information"
+        },
+        {
+            "name": "clang-cl",
+            "configurePreset": "msbuild-clang",
+            "displayName": "Release",
+            "configuration": "Release",
+            "description": "Optimize for speed - exclude debug information"
+        },
+        {
+            "name": "gcc-dbg",
+            "configurePreset": "ninja-gcc",
+            "displayName": "Debug",
+            "configuration": "Debug",
+            "description": "Disable optimizations - include debug information"
+        },
+        {
+            "name": "gcc",
+            "configurePreset": "ninja-gcc",
+            "displayName": "Release",
+            "configuration": "Release",
+            "description": "Optimize for speed - exclude debug information"
+        },
+        {
+            "name": "clang-dbg",
+            "configurePreset": "ninja-clang",
+            "displayName": "Debug",
+            "configuration": "Debug",
+            "description": "Disable optimizations - include debug information"
+        },
+        {
+            "name": "clang",
+            "configurePreset": "ninja-clang",
+            "displayName": "Release",
+            "configuration": "Release",
+            "description": "Optimize for speed - exclude debug information"
+        }
+    ]
+}
